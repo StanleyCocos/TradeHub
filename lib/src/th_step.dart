@@ -8,6 +8,8 @@ class THStep extends StatelessWidget {
   final EdgeInsets? padding;
   final Map<String, String> steps;
   final int index;
+  final Color? selectedColor;
+  final Color? selectedBgColor;
 
   const THStep({
     Key? key,
@@ -17,6 +19,8 @@ class THStep extends StatelessWidget {
     this.height,
     this.padding,
     this.margin,
+    this.selectedColor = const Color(0xFFFF6600),
+    this.selectedBgColor = const Color(0xFFFFEFE5),
   }) : super(key: key);
 
   @override
@@ -24,8 +28,8 @@ class THStep extends StatelessWidget {
     return Container(
       width: width ?? ScreenUtil().screenWidth,
       height: height ?? 164.w,
-      margin: margin ?? EdgeInsets.symmetric(horizontal: 32.w),
-      padding: padding ?? EdgeInsets.symmetric(horizontal: 32.w),
+      margin: margin ?? EdgeInsets.symmetric(horizontal: 16.w),
+      padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24.w),
@@ -89,7 +93,9 @@ class THStep extends StatelessWidget {
           height: 1,
           margin: EdgeInsets.symmetric(horizontal: 16.w),
           width: double.infinity,
-          color: const Color(0xFFF2F3F5),
+          color: index < this.index
+              ? selectedColor
+              : const Color(0xFFF2F3F5),
         )));
       }
     }
@@ -98,27 +104,36 @@ class THStep extends StatelessWidget {
 
   Widget _item({String text = "", int index = 0, bool selected = false}) {
     return Container(
-      width: 48.w,
-      height: 48.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24.w),
-        color: selected ? const Color(0xFFFF6600) : const Color(0xFFF2F3F5),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        "$index",
-        style: TextStyle(
-          fontSize: 28.sp,
-          color: selected ? Colors.white : const Color(0xFF4E5969),
-        ),
-      ),
-    );
+        width: 48.w,
+        height: 48.w,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24.w),
+            color: index - 1 < this.index
+                ? selectedBgColor
+                : selected
+                    ? selectedColor
+                    : const Color(0xFFF2F3F5)),
+        alignment: Alignment.center,
+        child: index - 1 < this.index
+            ? Icon(
+                Icons.check,
+                color: selectedColor,
+                size: 24.w,
+              )
+            : Text(
+                index.toString(),
+                style: TextStyle(
+                  fontSize: 28.sp,
+                  color: selected ? Colors.white : const Color(0xFF4E5969),
+                  fontWeight: FontWeight.w600,
+                ),
+              ));
   }
 
   double get _width {
     double sWidth = width ?? ScreenUtil().screenWidth;
-    EdgeInsets sMargin = margin ?? EdgeInsets.symmetric(horizontal: 32.w);
-    EdgeInsets sPadding = padding ?? EdgeInsets.symmetric(horizontal: 32.w);
+    EdgeInsets sMargin = margin ?? EdgeInsets.symmetric(horizontal: 16.w);
+    EdgeInsets sPadding = padding ?? EdgeInsets.symmetric(horizontal: 16.w);
     return sWidth - sMargin.horizontal - sPadding.horizontal;
   }
 }

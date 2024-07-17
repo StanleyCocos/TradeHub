@@ -54,16 +54,16 @@ class THButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
           border: border,
         ),
-        alignment: Alignment.center,
+        // alignment: Alignment.center,
         padding: padding,
         child: Text(
           text,
           style: style,
-          strutStyle: const StrutStyle(
-            leading: 0,
-            height: 1.1,
-            forceStrutHeight: true,
-          ),
+          // strutStyle: const StrutStyle(
+          //   leading: 0,
+          //   height: 1.1,
+          //   forceStrutHeight: true,
+          // ),
         ),
       ),
     );
