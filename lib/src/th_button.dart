@@ -6,7 +6,7 @@ class THButton extends StatelessWidget {
     Key? key,
     this.text = '',
     this.borderRadius = 100,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    this.padding,
     this.backgroundColor = const Color(0xFFFF6600),
     this.style = const TextStyle(fontSize: 16, color: Color(0xFFFFFFFF)),
     this.onTap,
@@ -17,7 +17,7 @@ class THButton extends StatelessWidget {
     Key? key,
     this.text = '',
     this.borderRadius = 100,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    this.padding ,
     this.backgroundColor = const Color(0xFFFFFFFF),
     this.style = const TextStyle(fontSize: 16, color: Color(0xFF333333)),
     this.border,
@@ -28,7 +28,7 @@ class THButton extends StatelessWidget {
     Key? key,
     this.text = '',
     this.borderRadius = 0.0,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    this.padding,
     this.border,
     this.backgroundColor,
     this.onTap,
@@ -37,7 +37,7 @@ class THButton extends StatelessWidget {
 
   final String text;
   final double borderRadius;
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
   final Border? border;
   final Color? backgroundColor;
   final TextStyle? style;
@@ -54,11 +54,12 @@ class THButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
           border: border,
         ),
-        // alignment: Alignment.center,
-        padding: padding,
+        // alignment: padding == null ? Alignment.center : null,
+        padding: padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Text(
           text,
           style: style,
+          textAlign: TextAlign.center,
           // strutStyle: const StrutStyle(
           //   leading: 0,
           //   height: 1.1,
