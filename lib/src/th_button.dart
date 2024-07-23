@@ -1,30 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class THButton extends StatelessWidget {
-  const THButton.high({
-    Key? key,
-    this.text = '',
-    this.borderRadius = 100,
-    this.padding,
-    this.backgroundColor = const Color(0xFFFF6600),
-    this.style = const TextStyle(fontSize: 16, color: Color(0xFFFFFFFF)),
-    this.onTap,
-    this.border,
-  }) : super(key: key);
+abstract class _THBtn extends StatelessWidget {
 
-  const THButton.normal({
-    Key? key,
-    this.text = '',
-    this.borderRadius = 100,
-    this.padding ,
-    this.backgroundColor = const Color(0xFFFFFFFF),
-    this.style = const TextStyle(fontSize: 16, color: Color(0xFF333333)),
-    this.border,
-    this.onTap,
-  }) : super(key: key);
+  final Widget? child;
+  final String text;
+  final double borderRadius;
+  final EdgeInsets? padding;
+  final Border? border;
+  final Color? backgroundColor;
+  final TextStyle? style;
+  final GestureTapCallback? onTap;
+  final double? height;
 
-  const THButton({
+  const _THBtn({
     Key? key,
     this.text = '',
     this.borderRadius = 0.0,
@@ -33,15 +22,54 @@ class THButton extends StatelessWidget {
     this.backgroundColor,
     this.onTap,
     this.style,
+    this.child,
+    this.height,
   }) : super(key: key);
 
-  final String text;
-  final double borderRadius;
-  final EdgeInsets? padding;
-  final Border? border;
-  final Color? backgroundColor;
-  final TextStyle? style;
-  final GestureTapCallback? onTap;
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class THButton extends _THBtn {
+  const THButton.high({
+    super.key,
+    super.text = '',
+    super.height,
+    super.borderRadius = 100,
+    super.padding,
+    super.backgroundColor = const Color(0xFFFF6600),
+    super.style = const TextStyle(fontSize: 16, color: Color(0xFFFFFFFF)),
+    super.onTap,
+    super.border,
+  });
+
+  const THButton.normal({
+    Key? key,
+    super.text = '',
+    super.height,
+    super.borderRadius = 100,
+    super.padding,
+    super.backgroundColor = const Color(0xFFFFFFFF),
+    super.style = const TextStyle(fontSize: 16, color: Color(0xFF333333)),
+    super.border,
+    super.onTap,
+  }) : super(key: key);
+
+
+  const THButton.custom({
+    super.key,
+    super.borderRadius = 100,
+    super.padding,
+    super.height,
+    super.backgroundColor = const Color(0xFFFFFFFF),
+    super.style = const TextStyle(fontSize: 16, color: Color(0xFF333333)),
+    super.border,
+    super.onTap,
+    super.child,
+  });
 
 
   @override
@@ -49,23 +77,26 @@ class THButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        height: height,
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(borderRadius),
           border: border,
         ),
-        // alignment: padding == null ? Alignment.center : null,
-        padding: padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Text(
-          text,
-          style: style,
-          textAlign: TextAlign.center,
-          // strutStyle: const StrutStyle(
-          //   leading: 0,
-          //   height: 1.1,
-          //   forceStrutHeight: true,
-          // ),
-        ),
+        alignment: height != null ? Alignment.center : null,
+        padding:
+            padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: child ??
+            Text(
+              text,
+              style: style,
+              textAlign: TextAlign.center,
+              strutStyle: const StrutStyle(
+                leading: 0,
+                height: 1.1,
+                forceStrutHeight: true,
+              ),
+            ),
       ),
     );
   }
