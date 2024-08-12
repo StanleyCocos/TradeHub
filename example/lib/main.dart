@@ -1,7 +1,8 @@
+import 'package:example/pages/base/base_page.dart';
+import 'package:example/pages/base/divider_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'pages/base_page.dart';
 import 'pages/show/countdown_page.dart';
 import 'pages/show/show_page.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         '/base': (context) => const BasePage(),
         '/show': (context) => const ShowPage(),
         '/countdown': (context) => const CountdownPage(),
+        '/divider': (context) => const DividerPage(),
       },
       home: const MyHomePage(),
     );

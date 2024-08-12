@@ -23,7 +23,7 @@ class _BasePageState extends State<BasePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('基础'),),
+      appBar: AppBar(title: const Text('基础'),),
       body: Column(
         children: [
 
