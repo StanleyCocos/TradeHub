@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trade_hub/src/util/iterable_ext.dart';
 
 enum THCheckBoxType {
   /// 单选框
@@ -47,7 +48,6 @@ class THCheckBoxController {
 
   /// 获取选中的列表
   List allChecked() {
-    //return _state?.checkBoxStates.where((k, v) => v).keys.toList() ?? [];
     return _state?.getAllChecked() ?? [];
   }
 
@@ -58,10 +58,32 @@ class THCheckBoxController {
     return list.contains(item);
   }
 
+  /// 重置选项
+  bool reset() {
+    _state?.reset();
+    return true;
+  }
+
 }
 
 /// 单选框/复选框
 class THCheckBox<T> extends StatefulWidget {
+
+  THCheckBox({
+    super.key,
+    required this.itemList,
+    required this.itemBuilder,
+    this.itemCompare,
+    this.controller,
+    this.direction = THCheckBoxDirection.vertical,
+    this.type = THCheckBoxType.checkbox,
+    this.checkedList,
+    this.spacing = 0.0,
+    this.runSpacing = 0.0,
+    this.radioAllowCancel = false,
+    this.onClickCheckChanged,
+    this.onCheckChanged,
+  });
 
   final THCheckBoxController? controller;
 
@@ -73,17 +95,22 @@ class THCheckBox<T> extends StatefulWidget {
   Widget? Function(BuildContext context, int index, T item, bool isCheck)
       itemBuilder;
 
-  /// 点击选中状态改变回调
+  /// 点击选中状态改变回调，只有手动点击才会回调，通过控制器操作不会回调
   /// @param checkedList 选中的列表,包含最新的选中状态
   /// @param index 当前选中的索引
   /// @param isCheck 当前选中状态
   final Function(List<T> checkedList, int index, bool isCheck)? onClickCheckChanged;
 
-  /// 选中状态改变回调
+  /// 选中状态改变回调，只要是选中的有改变都会回调
   final Function(List<T> checkedList)? onCheckChanged;
+
+  /// 比较两个对象是否相等
+  final bool Function(T, T)? itemCompare;
 
   /// 选中的列表
   List<T>? checkedList;
+  /// 内部使用的选中列表
+  List<T> checkedStatesList = [];
 
   /// 数据列表
   List<T> itemList = [];
@@ -100,19 +127,8 @@ class THCheckBox<T> extends StatefulWidget {
   /// 纵向间距
   double runSpacing = 0.0;
 
-  THCheckBox({
-    super.key,
-    required this.itemList,
-    required this.itemBuilder,
-    this.controller,
-    this.direction = THCheckBoxDirection.vertical,
-    this.type = THCheckBoxType.checkbox,
-    this.checkedList,
-    this.spacing = 0.0,
-    this.runSpacing = 0.0,
-    this.onClickCheckChanged,
-    this.onCheckChanged,
-  });
+  /// 单选是否支持取消选中
+  bool radioAllowCancel = false;
 
   @override
   State<StatefulWidget> createState() {
@@ -123,9 +139,25 @@ class THCheckBox<T> extends StatefulWidget {
 class _THCheckBoxState<T> extends State<THCheckBox<T>> {
   @override
   void initState() {
-    widget.checkedList ??= <T>[];
+    _syncCheckState(widget.checkedList);
     super.initState();
     widget.controller?._state = this;
+  }
+
+  @override
+  void didUpdateWidget(covariant THCheckBox<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final oldCheckedList = oldWidget.checkedList;
+    final newCheckedList = widget.checkedList;
+    if(oldCheckedList != newCheckedList) {
+      _syncCheckState(newCheckedList);
+    }
+  }
+
+  void _syncCheckState(List<T>? checkedList) {
+    widget.checkedStatesList.clear();
+    if(checkedList == null) return;
+    widget.checkedStatesList.addAll(checkedList);
   }
 
   @override
@@ -168,8 +200,10 @@ class _THCheckBoxState<T> extends State<THCheckBox<T>> {
   }
 
   Widget _buildItem(BuildContext context, int index) {
+
     T item = widget.itemList[index];
-    bool isChecked = widget.checkedList?.contains(item) ?? false;
+    bool isChecked = _listContains(item, widget.checkedStatesList);
+    print("_buildItem:index:$index, $item, $isChecked");
     Widget? itemView =
         widget.itemBuilder?.call(context, index, item, isChecked);
     return GestureDetector(
@@ -180,12 +214,31 @@ class _THCheckBoxState<T> extends State<THCheckBox<T>> {
     );
   }
 
+  bool _listContains(T item, List<T>? list) {
+    print("_listContains:item:$item, list:$list");
+    if(list == null) return false;
+    if(widget.itemCompare != null) {
+      return list.containsByComparing(item, widget.itemCompare!);
+    }else {
+      return list.containsByComparing(item, (T a, T b) => a == b);
+    }
+  }
+
   void _onClickItem(int index, T item, bool isChecked) {
-    List<T> checkedList = widget.checkedList ?? [];
+    widget.checkedStatesList ??= [];
+    List<T> checkedList = widget.checkedStatesList!;
     switch (widget.type) {
       case THCheckBoxType.radio:
-        checkedList.clear();
-        checkedList.add(item);
+        var originItem = widget.itemList[index];
+        if (checkedList.contains(originItem)) {
+          if(widget.radioAllowCancel){
+            checkedList.remove(originItem);
+          }
+        } else {
+          checkedList.clear();
+          checkedList.add(originItem);
+          print("选中的值:$checkedList");
+        }
         break;
       case THCheckBoxType.checkbox:
         if (checkedList.contains(item)) {
@@ -195,6 +248,7 @@ class _THCheckBoxState<T> extends State<THCheckBox<T>> {
         }
         break;
     }
+    widget.onCheckChanged?.call(checkedList);
     widget.onClickCheckChanged?.call(checkedList, index, !isChecked);
     setState(() {});
   }
@@ -202,35 +256,59 @@ class _THCheckBoxState<T> extends State<THCheckBox<T>> {
   ///-------- 控制器方法实现 ------------
   /// 全选/全不选
   void toggleAll(bool check) {
-    if(widget.checkedList == null) {
-      return;
-    }
+    if(widget.type == THCheckBoxType.radio) return;
+    if(widget.checkedStatesList == null) return;
     if(check) {
-      widget.checkedList!.clear();
-      widget.checkedList!.addAll(widget.itemList);
+      widget.checkedStatesList!.clear();
+      widget.checkedStatesList!.addAll(widget.itemList);
     }else {
-      widget.checkedList!.clear();
+      widget.checkedStatesList!.clear();
     }
-    widget.onCheckChanged?.call(widget.checkedList!);
+    widget.onCheckChanged?.call(widget.checkedStatesList!);
     setState(() {});
   }
 
   /// 选中某项
   bool toggle(int index, bool check, {notify = true}) {
-    if(index < 0 || index >= widget.itemList.length || widget.checkedList == null) {
+    if(index < 0 || index >= widget.itemList.length || widget.checkedStatesList == null) {
       return false;
     }
-    //bool checked = true;
-    if(check){
-      var item = widget.itemList[index];
-      if(!widget.checkedList!.contains(item)) {
-        widget.checkedList?.add(item);
-      }
-    }else {
-      widget.checkedList!.removeAt(index);
+    bool change = false;
+    switch (widget.type){
+      case THCheckBoxType.radio:
+        if(check){
+          widget.checkedStatesList!.clear();
+          widget.checkedStatesList!.add(widget.itemList[index]);
+          change = true;
+        }else {
+          // 单选框支持取消选中
+          if(widget.radioAllowCancel) {
+            var item = widget.itemList[index];
+            if(!widget.checkedStatesList!.contains(item)){
+              widget.checkedStatesList!.removeAt(index);
+              change = true;
+            }
+          }
+        }
+        break;
+      case THCheckBoxType.checkbox:
+        if(check){
+          var item = widget.itemList[index];
+          if(!widget.checkedStatesList!.contains(item)) {
+            widget.checkedStatesList?.add(item);
+            change = true;
+          }
+        }else {
+          if(index < widget.checkedStatesList!.length){
+            widget.checkedStatesList!.removeAt(index);
+            change = true;
+          }
+        }
+        break;
     }
-    widget.onCheckChanged?.call(widget.checkedList!);
-    if(notify){
+
+    widget.onCheckChanged?.call(widget.checkedStatesList!);
+    if(notify && change){
       setState(() {});
     }
     return true;
@@ -238,25 +316,32 @@ class _THCheckBoxState<T> extends State<THCheckBox<T>> {
 
   /// 反选
   void reverseAll() {
-    if(widget.checkedList == null) {
-      return;
-    }
+    /// 单选框不支持反选
+    if(widget.type == THCheckBoxType.radio) return;
+    if(widget.checkedStatesList == null) return;
     List<T> list = [];
     for(int i = 0; i < widget.itemList.length; i++) {
       var item = widget.itemList[i];
-      if(!widget.checkedList!.contains(item)) {
+      if(!widget.checkedStatesList!.contains(item)) {
         list.add(item);
       }
     }
-    widget.checkedList!.clear();
-    widget.checkedList!.addAll(list);
-    widget.onCheckChanged?.call(widget.checkedList!);
+    widget.checkedStatesList!.clear();
+    widget.checkedStatesList!.addAll(list);
+    widget.onCheckChanged?.call(widget.checkedStatesList!);
     setState(() {});
   }
 
   /// 获取选中的列表
   List<T> getAllChecked() {
-    return widget.checkedList ?? [];
+    return widget.checkedStatesList ?? [];
+  }
+
+  /// 重置选项
+  void reset() {
+    if(widget.checkedStatesList == null || widget.checkedStatesList!.isEmpty) return;
+    widget.checkedStatesList?.clear();
+    setState(() {});
   }
 
 }
