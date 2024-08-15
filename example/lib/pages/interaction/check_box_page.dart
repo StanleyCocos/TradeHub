@@ -32,11 +32,12 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
 
   /// 复选框控制器
   final THCheckBoxController _checkBoxController = THCheckBoxController();
+
   /// 单选框控制器
   final THCheckBoxController _radioBoxController = THCheckBoxController();
+
   /// 单选框是否支持取消
   bool radioAllowCancel = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -69,19 +70,24 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
         THCheckBox(
           controller: _checkBoxController,
           itemList: testObjectList,
-          checkedList: [Test(name: "提莫队长"),Test(name: "狂战士")],  //默认选中， 不是同一对象引用，需要重写itemCompare比较方法，默认 == 比较
+          checkedList: [
+            Test(name: "提莫队长"),
+            Test(name: "狂战士")
+          ], //默认选中， 不是同一对象引用，需要重写itemCompare比较方法，默认 == 比较
           direction: THCheckBoxDirection.horizontal,
-          radioAllowCancel: radioAllowCancel,   // 单选是否支持取消
+          radioAllowCancel: radioAllowCancel, // 单选是否支持取消
           spacing: 20,
           runSpacing: 20,
-          itemCompare: (Test a, Test b) {     // 重写比较方法， 不重写默认是 == 比较
+          itemCompare: (Test a, Test b) {
+            // 重写比较方法， 不重写默认是 == 比较
             return a.name == b.name;
           },
-          onClickCheckChanged: (List<Test> checkedList, int index, bool isCheck) {
+          onClickCheckChanged:
+              (List<Test> checkedList, int index, bool isCheck) {
             //点击选中状态改变回调，只有手动点击才会回调，通过控制器操作不会回调
-
           },
-          itemBuilder: (BuildContext context, int index, Test item, bool isCheck) {
+          itemBuilder:
+              (BuildContext context, int index, Test item, bool isCheck) {
             // 构建 item 视图，可自定义视图
             return THCheckboxItem(
               title: item.name,
@@ -90,43 +96,48 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
           },
         ),
 
-        const SizedBox(height: 20,),
-
-        const Text(
-          "控制器操作:",
-          style: TextStyle(
-            fontSize: 15,
-            color: Colors.red,
-          )
+        const SizedBox(
+          height: 20,
         ),
+
+        const Text("控制器操作:",
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.red,
+            )),
         Wrap(
           children: [
-            TextButton(onPressed: () {
-              _checkBoxController.toggle(1, true);
-            }, child: const Text("选中第2个")),
-
-            TextButton(onPressed: () {
-              _checkBoxController.toggleAll(true);
-            }, child: const Text("全选")),
-
-            TextButton(onPressed: () {
-              _checkBoxController.toggleAll(false);
-            }, child: const Text("全不选")),
-
-            TextButton(onPressed: () {
-              _checkBoxController.reverseAll();
-            }, child: const Text("反选")),
-
-            TextButton(onPressed: () {
-              List list = _checkBoxController.allChecked();
-              print("选中的值:$list");
-            }, child: const Text("获取选中的值")),
-
+            TextButton(
+                onPressed: () {
+                  _checkBoxController.toggle(1, true);
+                },
+                child: const Text("选中第2个")),
+            TextButton(
+                onPressed: () {
+                  _checkBoxController.toggleAll(true);
+                },
+                child: const Text("全选")),
+            TextButton(
+                onPressed: () {
+                  _checkBoxController.toggleAll(false);
+                },
+                child: const Text("全不选")),
+            TextButton(
+                onPressed: () {
+                  _checkBoxController.reverseAll();
+                },
+                child: const Text("反选")),
+            TextButton(
+                onPressed: () {
+                  List list = _checkBoxController.allChecked();
+                  print("选中的值:$list");
+                },
+                child: const Text("获取选中的值")),
           ],
         ),
 
         const THDivider(
-            isDashed: true,
+          isDashed: true,
           margin: EdgeInsets.symmetric(vertical: 10),
         ),
 
@@ -140,18 +151,24 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
         const SizedBox(
           height: 10,
         ),
+
         /// 自定义视图
         THCheckBox(
           itemList: testObjectList,
-          checkedList: [testObjectList[0],testObjectList[2]],  //默认选中， 不是同一对象引用，需要重写itemCompare比较方法，默认 == 比较
+          checkedList: [
+            testObjectList[0],
+            testObjectList[2]
+          ], //默认选中， 不是同一对象引用，需要重写itemCompare比较方法，默认 == 比较
           direction: THCheckBoxDirection.horizontal,
           radioAllowCancel: radioAllowCancel,
           spacing: 20,
           runSpacing: 20,
-          itemCompare: (Test a, Test b) {     // 重写比较方法， 不重写默认是 == 比较
+          itemCompare: (Test a, Test b) {
+            // 重写比较方法， 不重写默认是 == 比较
             return a.name == b.name;
           },
-          itemBuilder: (BuildContext context, int index, Test item, bool isCheck) {
+          itemBuilder:
+              (BuildContext context, int index, Test item, bool isCheck) {
             // 构建 item 视图，可自定义视图
             return Container(
               decoration: BoxDecoration(
@@ -213,7 +230,8 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
           onCheckChanged: (List<Test> checkedList) {
             print("checkedList:$checkedList");
           },
-          onClickCheckChanged: (List<Test> checkedList, int index, bool isCheck) {
+          onClickCheckChanged:
+              (List<Test> checkedList, int index, bool isCheck) {
             print("checkedList:$checkedList, index:$index, isCheck:$isCheck");
           },
           itemBuilder:
@@ -224,32 +242,32 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
             );
           },
         ),
-
         Row(
           children: [
-            TextButton(onPressed: () {
-              _radioBoxController.toggle(1, true);
-            }, child: const Text("选中第2个")),
-
-            TextButton(onPressed: () {
-              List list = _radioBoxController.allChecked();
-              print("选中的值:$list");
-            }, child: const Text("获取选中的值")),
-
-            TextButton(onPressed: () {
-              radioAllowCancel = !radioAllowCancel;
-              setState(() {});
-            }, child: Text(radioAllowCancel ? '可取消' : '不可取消')),
-
-
-
-            TextButton(onPressed: () {
-              _radioBoxController.reset();
-            }, child: const Text("重置选项")),
-
+            TextButton(
+                onPressed: () {
+                  _radioBoxController.toggle(1, true);
+                },
+                child: const Text("选中第2个")),
+            TextButton(
+                onPressed: () {
+                  List list = _radioBoxController.allChecked();
+                  print("选中的值:$list");
+                },
+                child: const Text("获取选中的值")),
+            TextButton(
+                onPressed: () {
+                  radioAllowCancel = !radioAllowCancel;
+                  setState(() {});
+                },
+                child: Text(radioAllowCancel ? '可取消' : '不可取消')),
+            TextButton(
+                onPressed: () {
+                  _radioBoxController.reset();
+                },
+                child: const Text("重置选项")),
           ],
         ),
-
       ],
     );
   }
