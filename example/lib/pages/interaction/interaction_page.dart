@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trade_hub/trade_hub.dart';
 
+///交互组件页面
 class InteractionPage extends StatefulWidget {
   const InteractionPage({Key? key}) : super(key: key);
 
@@ -11,7 +13,8 @@ class InteractionPage extends StatefulWidget {
 
 class _InteractionPageState extends State<InteractionPage> {
   final List<String> _list = [
-    '单选',
+    "单选",
+    "输入框"
   ];
 
   void onClick(int index){
@@ -19,6 +22,9 @@ class _InteractionPageState extends State<InteractionPage> {
     switch(index){
       case 0:
         routeName = '/check_box';
+        break;
+      case 1:
+        routeName = '/input';
         break;
       default:
         routeName = '/interaction';
@@ -36,19 +42,15 @@ class _InteractionPageState extends State<InteractionPage> {
       body: ListView.separated(
         itemCount: _list.length,
         separatorBuilder: (_, __) {
-          return const Divider(
-            endIndent: 16,
-            indent: 16,
-            height: 1,
-            color: Colors.black,
-            thickness: 1,
+          return const THDivider(
+            margin: EdgeInsets.symmetric(vertical: 10)
           );
         },
         itemBuilder: (_, index) {
           return GestureDetector(
             onTap: ()=> onClick(index),
             child: Container(
-              height: 50,
+              height: 30,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 _list[index],

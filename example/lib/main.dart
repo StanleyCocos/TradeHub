@@ -1,6 +1,7 @@
 import 'package:example/pages/base/base_page.dart';
 import 'package:example/pages/base/divider_page.dart';
 import 'package:example/pages/interaction/check_box_page.dart';
+import 'package:example/pages/interaction/input_page.dart';
 import 'package:example/pages/interaction/interaction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/divider': (context) => const DividerPage(),
         '/interaction': (context) => const InteractionPage(),
         '/check_box': (context) => const CheckBoxPage(),
+        '/input': (context) => const InputPage(),
       },
       home: const MyHomePage(),
     );

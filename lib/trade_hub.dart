@@ -7,3 +7,4 @@ export 'src/th_button.dart';
 export 'src/th_step.dart';
 export 'src/th_divider.dart';
 export 'src/th_check_box.dart';
+export 'src/th_input.dart';
