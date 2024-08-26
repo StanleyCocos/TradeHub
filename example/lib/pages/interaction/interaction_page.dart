@@ -14,7 +14,8 @@ class InteractionPage extends StatefulWidget {
 class _InteractionPageState extends State<InteractionPage> {
   final List<String> _list = [
     "单选",
-    "输入框"
+    "输入框",
+    "数量编辑器",
   ];
 
   void onClick(int index){
@@ -25,6 +26,9 @@ class _InteractionPageState extends State<InteractionPage> {
         break;
       case 1:
         routeName = '/input';
+        break;
+      case 2:
+        routeName = '/quantity_editor';
         break;
       default:
         routeName = '/interaction';
