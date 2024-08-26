@@ -67,7 +67,7 @@ class _InputPageState extends State<InputPage> {
       showLimitLabel: true,
       isCounter: true,
       showDivider: true,
-      showCleanButton: true,
+      showClear: true,
       limitSuffix: '字',
       maxLength: 10,
       limitLabelStyle: const TextStyle(
@@ -83,11 +83,12 @@ class _InputPageState extends State<InputPage> {
   /// 普通输入框-自定义整个 label
   Widget _normalLabelInput() {
     return THInput(
-      limitAlign: THInputLimitAlign.tail,
+      limitAlign: THInputLimitAlign.below,
+      isCollapsed: true,
       showLimitLabel: true,
       isCounter: false, // 不显示计数器
       showDivider: true,
-      showCleanButton: true,
+      showClear: true,
       limitSuffix: '字',
       maxLength: 10,
       limitLabelStyle: const TextStyle(

@@ -29,7 +29,7 @@ class THInput extends StatefulWidget {
     this.onLabelIconTap,
     this.labelIcon,
     this.labelIconWidget,
-    this.showCleanButton = false,
+    this.showClear = false,
     this.maxLines,
     this.textAlign,
     this.controller,
@@ -43,6 +43,13 @@ class THInput extends StatefulWidget {
     this.inputFormatters,
     this.keyboardType,
     this.focusNode,
+    this.autofocus = false,
+    this.border = InputBorder.none,
+    this.disabledBorder,
+    this.enabledBorder,
+    this.focusedErrorBorder,
+    this.focusedBorder,
+    this.isCollapsed = false,
   });
 
   final bool isMust;
@@ -86,7 +93,7 @@ class THInput extends StatefulWidget {
   final Widget? labelIconWidget;
 
   ///-- 是否显示清除按钮
-  final bool showCleanButton;
+  final bool showClear;
 
   ///-- TextField 属性
   final TextEditingController? controller;
@@ -101,6 +108,13 @@ class THInput extends StatefulWidget {
   final TextAlign? textAlign;
   final TextInputType? keyboardType;
   final FocusNode? focusNode;
+  final bool autofocus;
+  final InputBorder? disabledBorder;
+  final InputBorder? enabledBorder;
+  final InputBorder? focusedErrorBorder;
+  final InputBorder? focusedBorder;
+  final InputBorder? border;
+  final bool isCollapsed;
 
   @override
   State createState() {
@@ -122,51 +136,60 @@ class _THInputState extends State<THInput> {
 
   @override
   Widget build(BuildContext context) {
+    Widget child;
     switch (widget.layoutType) {
       case THInputLayoutType.row:
-        return _layoutByRow;
+        child = _layoutByRow;
+        break;
       case THInputLayoutType.column:
-        return _layoutByColumn;
+        child =  _layoutByColumn;
+        break;
     }
+    return child;
   }
 
   Widget get _layoutByRow {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        SizedBox(
-          height: widget.height ?? 50,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Row(
-                children: [
-                  widget.label ?? _label,
-                  Expanded(
-                    flex: 1,
-                    child: _input,
-                  ),
-                  const SizedBox(width: 5),
-                  _cleanButton,
-                  Offstage(
-                    offstage: widget.limitAlign != THInputLimitAlign.tail,
-                    child: _counterText,
-                  ),
-                ],
-              ),
-              Offstage(
-                offstage: widget.limitAlign != THInputLimitAlign.below,
-                child: _counterText,
-              )
-            ],
+    return SizedBox(
+      height: widget.height ?? 51,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            constraints: const BoxConstraints(
+              minHeight: 50,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Row(
+                  children: [
+                    widget.label ?? _label,
+                    Expanded(
+                      flex: 1,
+                      child: _input,
+                    ),
+                    const SizedBox(width: 5),
+                    _cleanButton,
+                    Offstage(
+                      offstage: widget.limitAlign != THInputLimitAlign.tail,
+                      child: _counterText,
+                    ),
+                  ],
+                ),
+                Offstage(
+                  offstage: widget.limitAlign != THInputLimitAlign.below,
+                  child: _counterText,
+                )
+              ],
+            ),
           ),
-        ),
-        Offstage(
-          offstage: !widget.showDivider,
-          child: const THDivider(),
-        )
-      ],
+          Offstage(
+            offstage: !widget.showDivider,
+            child: const THDivider(),
+          )
+        ],
+      ),
     );
   }
 
@@ -285,6 +308,7 @@ class _THInputState extends State<THInput> {
     return TextField(
         controller: _controller,
         focusNode: widget.focusNode,
+        autofocus: widget.autofocus ,
         cursorHeight: widget.cursorHeight,
         cursorColor: THColor.orangeED702D,
         style: widget.editTextStyle ??
@@ -298,12 +322,17 @@ class _THInputState extends State<THInput> {
         keyboardType: widget.keyboardType,
         decoration: widget.decoration ??
             InputDecoration(
-              border: InputBorder.none,
+              border: widget.border,
+              disabledBorder: widget.disabledBorder ?? widget.border,
+              enabledBorder: widget.enabledBorder ?? widget.border,
+              focusedErrorBorder: widget.focusedErrorBorder ?? widget.border,
+              focusedBorder: widget.focusedBorder ?? widget.border,
               hintText: widget.hint,
               hintStyle: TextStyle(
                 color: THColor.grayCCCCCC,
+                fontSize: 16,
               ),
-              //isCollapsed: true,
+              isCollapsed: widget.isCollapsed,
               counterText: "",
             ),
         enabled: widget.enabled,
@@ -352,7 +381,7 @@ class _THInputState extends State<THInput> {
     return ValueListenableBuilder(
       valueListenable: _valueNotifier,
       builder: (BuildContext context, String value, Widget? child) {
-        bool isShow = widget.showCleanButton && value.isNotEmpty;
+        bool isShow = widget.showClear && value.isNotEmpty;
         return Offstage(
           offstage: !isShow,
           child: GestureDetector(
