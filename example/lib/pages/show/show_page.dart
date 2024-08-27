@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trade_hub/trade_hub.dart';
 
 class ShowPage extends StatefulWidget {
   const ShowPage({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class ShowPage extends StatefulWidget {
 class _ShowPageState extends State<ShowPage> {
   final List<String> _list = [
     '倒计时',
+    '圆形加载'
   ];
 
   void onClick(int index){
@@ -19,8 +21,8 @@ class _ShowPageState extends State<ShowPage> {
       case 0:
         routeName = '/countdown';
         break;
-      case 2:
-        routeName = '/show';
+      case 1:
+        routeName = '/circle_loading';
         break;
       default:
         routeName = '/base';
@@ -38,12 +40,8 @@ class _ShowPageState extends State<ShowPage> {
       body: ListView.separated(
         itemCount: _list.length,
         separatorBuilder: (_, __) {
-          return const Divider(
-            endIndent: 16,
-            indent: 16,
-            height: 1,
-            color: Colors.black,
-            thickness: 1,
+          return const THDivider(
+              margin: EdgeInsets.symmetric(vertical: 10)
           );
         },
         itemBuilder: (_, index) {
@@ -52,11 +50,14 @@ class _ShowPageState extends State<ShowPage> {
             child: Container(
               height: 50,
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                _list[index],
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.black54,
+              color: Colors.white,
+              child: Center(
+                child: Text(
+                  _list[index],
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ),

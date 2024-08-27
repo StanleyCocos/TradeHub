@@ -9,3 +9,6 @@ export 'src/th_divider.dart';
 export 'src/th_check_box.dart';
 export 'src/th_input.dart';
 export 'src/th_quantity_editor.dart';
+export 'src/th_circle_loading.dart';
+export 'src/th_switch/th_switch.dart';
+export 'src/th_circle_loading.dart';
