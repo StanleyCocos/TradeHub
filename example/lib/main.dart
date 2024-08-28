@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'action/action_page.dart';
+import 'action/src/popup_page.dart';
 import 'pages/base_page.dart';
+import 'pages/show/avatar_page.dart';
 import 'pages/show/countdown_page.dart';
 import 'pages/show/show_page.dart';
 
@@ -21,6 +24,9 @@ class MyApp extends StatelessWidget {
         '/base': (context) => const BasePage(),
         '/show': (context) => const ShowPage(),
         '/countdown': (context) => const CountdownPage(),
+        '/avatar': (context) => const AvatarPage(),
+        '/action': (context) => const ActionPage(),
+        '/popup': (context) => const PopupPage(),
       },
       home: const MyHomePage(),
     );
@@ -42,6 +48,9 @@ class _MyHomePageState extends State<MyHomePage> {
     switch(index){
       case 0:
         routeName = '/base';
+        break;
+      case 1:
+        routeName = '/action';
         break;
       case 2:
         routeName = '/show';

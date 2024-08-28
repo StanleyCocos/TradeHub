@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ShowPage extends StatefulWidget {
-  const ShowPage({Key? key}) : super(key: key);
+class ActionPage extends StatefulWidget {
+  const ActionPage({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ShowPageState();
+  State<StatefulWidget> createState() => _ActionState();
 }
 
-class _ShowPageState extends State<ShowPage> {
+class _ActionState extends State<ActionPage> {
   final List<String> _list = [
-    '倒计时',
-    '头像'
+    'popup',
   ];
 
   void onClick(int index) {
     String routeName = '';
     switch (index) {
       case 0:
-        routeName = '/countdown';
+        routeName = '/popup';
         break;
-    case 1:
-        routeName = '/avatar';
+      case 1:
         break;
     }
     Get.toNamed(routeName);
@@ -31,7 +29,7 @@ class _ShowPageState extends State<ShowPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('展示'),
+        title: const Text('交互'),
       ),
       body: ListView.separated(
         itemCount: _list.length,
