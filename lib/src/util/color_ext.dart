@@ -13,6 +13,8 @@ class THColor {
    static Color get redFF596B => const Color(0xFFFF596B);
    static Color get orangeED702D => const Color(0xFFED702D);
 
+   static Color get blackE6000000 => const Color(0xE6000000);
+
    static Color get gray333333 => const Color(0xFF333333);
    static Color get grayCCCCCC => const Color(0xFFCCCCCC);
    static Color get grayA8A6A9 => const Color(0xFFA8A6A9);

@@ -12,3 +12,4 @@ export 'src/th_quantity_editor.dart';
 export 'src/th_circle_loading.dart';
 export 'src/th_switch/th_switch.dart';
 export 'src/th_circle_loading.dart';
+export 'src/th_toast.dart';

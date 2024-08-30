@@ -5,6 +5,7 @@ import 'package:example/pages/interaction/input_page.dart';
 import 'package:example/pages/interaction/interaction_page.dart';
 import 'package:example/pages/interaction/quantity_editor_page.dart';
 import 'package:example/pages/interaction/switch_page.dart';
+import 'package:example/pages/interaction/toast_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         '/quantity_editor': (context) => const QuantityEditorPage(),
         '/switch': (context) => const SwitchPage(),
         '/circle_loading': (context) => const CircleLoadingPage(),
+        '/toast': (context) => const ToastPage(),
       },
       home: const MyHomePage(),
     );

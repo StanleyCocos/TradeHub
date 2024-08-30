@@ -16,7 +16,8 @@ class _InteractionPageState extends State<InteractionPage> {
     "单选",
     "输入框",
     "数量编辑器",
-    "开关 Switch"
+    "开关 Switch",
+    "轻提示 Toast"
   ];
 
   void onClick(int index){
@@ -33,6 +34,9 @@ class _InteractionPageState extends State<InteractionPage> {
         break;
       case 3:
         routeName = '/switch';
+        break;
+      case 4:
+        routeName = '/toast';
         break;
       default:
         routeName = '/interaction';
