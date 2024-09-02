@@ -34,26 +34,15 @@ class _ExamplePageState extends State<ExamplePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: ScrollbarTheme(
-          data: ScrollbarThemeData(
-              trackVisibility: MaterialStateProperty.all(true)),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            MediaQuery(
-              // 去掉底部安全区域,保证示例展示正常
-              data: MediaQuery.of(context).copyWith(padding: EdgeInsets.zero),
-              child: ListView.builder(
-                controller: widget.scrollController,
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(top: 24, bottom: 24),
-                itemCount: widget.children.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return widget.children[index];
-                },
-              ),
-            )
-          ]),
+        body: ListView.builder(
+          controller: widget.scrollController,
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.only(top: 24, bottom: 24),
+          itemCount: widget.children.length,
+          itemBuilder: (BuildContext context, int index) {
+            return widget.children[index];
+          },
         ));
   }
 }

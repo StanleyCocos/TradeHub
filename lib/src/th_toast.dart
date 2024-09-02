@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:trade_hub/src/th_circle_loading.dart';
 import 'package:trade_hub/src/util/color_ext.dart';
 
@@ -82,7 +83,7 @@ class THToast {
 
   /// 带文案的加载Toast
   static void showLoading(
-      {required BuildContext context, String? text, Duration duration = THToast._infiniteDuration}) {
+      {required BuildContext context, String? text = "加载中...", Duration duration = THToast._infiniteDuration}) {
     _showOverlay(
         _THToastLoading(
           text: text,
@@ -165,7 +166,7 @@ class _THIconTextToast extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 191, maxHeight: 94),
       child: Container(
-          padding: const EdgeInsets.fromLTRB(24, 14, 24, 14),
+          padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
           decoration: BoxDecoration(
             color: THColor.hex(0xE6000000),
             borderRadius: BorderRadius.circular(6),
@@ -182,24 +183,20 @@ class _THIconTextToast extends StatelessWidget {
               const SizedBox(
                 width: 8,
               ),
-              Text(
-                text ?? '',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: THColor.white,
-                  fontWeight: FontWeight.w400,
+              Flexible(
+                child: Text(
+                  text ?? '',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: THColor.white,
+                    fontWeight: FontWeight.w400,
+                    decoration: TextDecoration.none,
+                  ),
                 ),
               ),
-              /*TDText(
-                text ?? '',
-                font: TDTheme.of(context).fontBodyMedium,
-                fontWeight: FontWeight.w400,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textColor: TDTheme.of(context).whiteColor1,
-              )*/
             ],
           )),
     );
@@ -235,6 +232,7 @@ class _THIconTextToast extends StatelessWidget {
                     fontSize: 14,
                     color: THColor.white,
                     fontWeight: FontWeight.w400,
+                    decoration: TextDecoration.none,
                   ),
                 ),
               ],
@@ -257,7 +255,7 @@ class _THToastLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 110,
+        height: text == null ? 80 : 110,
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
           color: THColor.blackE6000000,
@@ -272,27 +270,27 @@ class _THToastLoading extends StatelessWidget {
               size: 26,
               strokeWidth: 4,
             ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              text ?? '',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 14,
-                color: THColor.white,
-                fontWeight: FontWeight.w400,
+            Offstage(
+              offstage: text == null,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    text ?? '',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: THColor.white,
+                      fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+                ],
               ),
             ),
-            /*TDText(
-              text ?? context.resource.loadingWithPoint,
-              font: TDTheme.of(context).fontBodyMedium,
-              fontWeight: FontWeight.w400,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textColor: TDTheme.of(context).whiteColor1,
-            )*/
           ],
         ));
   }
@@ -331,9 +329,9 @@ class _THTextToast extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: constraints ?? const BoxConstraints(maxWidth: 191, maxHeight: 94),
+      constraints: constraints ?? const BoxConstraints(maxWidth: 209, maxHeight: 94),
       child: Container(
-          padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+          padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
           decoration: BoxDecoration(
             color: THColor.blackE6000000,
             borderRadius: BorderRadius.circular(6),
@@ -346,15 +344,9 @@ class _THTextToast extends StatelessWidget {
               fontSize: 14,
               color: THColor.white,
               fontWeight: FontWeight.w400,
+              decoration: TextDecoration.none,
             ),
-          ),/*TDText(
-            text ?? '',
-            font: TDTheme.of(context).fontBodyMedium,
-            fontWeight: FontWeight.w400,
-            maxLines: maxLines ?? 3,
-            overflow: TextOverflow.ellipsis,
-            textColor: TDTheme.of(context).whiteColor1,
-          ),*/
+          ),
       ),
     );
   }
