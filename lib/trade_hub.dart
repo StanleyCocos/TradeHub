@@ -13,3 +13,6 @@ export 'src/th_circle_loading.dart';
 export 'src/th_switch/th_switch.dart';
 export 'src/th_circle_loading.dart';
 export 'src/th_toast.dart';
+export 'src/th_text/th_text.dart';
+export 'src/th_text/th_font.dart';
+export 'src/th_text/th_font_loader.dart';

@@ -9,6 +9,7 @@ import 'package:example/pages/interaction/toast_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'pages/base/text_page.dart';
 import 'pages/show/circle_loading_page.dart';
 import 'pages/show/countdown_page.dart';
 import 'pages/show/show_page.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         '/switch': (context) => const SwitchPage(),
         '/circle_loading': (context) => const CircleLoadingPage(),
         '/toast': (context) => const ToastPage(),
+        '/text': (context) => const TextPage(),
       },
       home: const MyHomePage(),
     );

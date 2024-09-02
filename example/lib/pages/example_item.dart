@@ -28,7 +28,7 @@ class ExampleItem extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.left,
-              style: const TextStyle(fontSize: 20, color: Colors.black),
+              style: const TextStyle(fontSize: 20, color: Colors.black,height: 1.5),
             ),
             const SizedBox(
               height: 10,
