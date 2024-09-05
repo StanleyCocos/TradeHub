@@ -1,5 +1,6 @@
 import 'package:example/pages/base/base_page.dart';
 import 'package:example/pages/base/divider_page.dart';
+import 'package:example/pages/base/image_page.dart';
 import 'package:example/pages/interaction/check_box_page.dart';
 import 'package:example/pages/interaction/input_page.dart';
 import 'package:example/pages/interaction/interaction_page.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         '/circle_loading': (context) => const CircleLoadingPage(),
         '/toast': (context) => const ToastPage(),
         '/text': (context) => const TextPage(),
+        '/image': (context) => ImagePage(),
       },
       home: const MyHomePage(),
     );

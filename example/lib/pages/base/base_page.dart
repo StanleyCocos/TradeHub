@@ -14,7 +14,8 @@ class BasePage extends StatefulWidget {
 class _BasePageState extends State<BasePage> {
   final List<String> _list = [
     '分割线',
-    'text 组件'
+    'text 组件',
+    'image 组件',
   ];
 
   void onClick(int index){
@@ -25,6 +26,9 @@ class _BasePageState extends State<BasePage> {
         break;
       case 1:
         routeName = '/text';
+        break;
+      case 2:
+        routeName = '/image';
         break;
       default:
         routeName = '/base';

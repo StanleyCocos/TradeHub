@@ -16,3 +16,4 @@ export 'src/th_toast.dart';
 export 'src/th_text/th_text.dart';
 export 'src/th_text/th_font.dart';
 export 'src/th_text/th_font_loader.dart';
+export 'src/th_image/th_image.dart';
