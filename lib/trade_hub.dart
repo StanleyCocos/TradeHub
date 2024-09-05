@@ -17,3 +17,4 @@ export 'src/th_text/th_text.dart';
 export 'src/th_text/th_font.dart';
 export 'src/th_text/th_font_loader.dart';
 export 'src/th_image/th_image.dart';
+export 'src/th_picker/th_picker.dart';

@@ -4,6 +4,7 @@ import 'package:example/pages/base/image_page.dart';
 import 'package:example/pages/interaction/check_box_page.dart';
 import 'package:example/pages/interaction/input_page.dart';
 import 'package:example/pages/interaction/interaction_page.dart';
+import 'package:example/pages/interaction/picker_page.dart';
 import 'package:example/pages/interaction/quantity_editor_page.dart';
 import 'package:example/pages/interaction/switch_page.dart';
 import 'package:example/pages/interaction/toast_page.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         '/toast': (context) => const ToastPage(),
         '/text': (context) => const TextPage(),
         '/image': (context) => ImagePage(),
+        '/picker': (context) => const PickerPage(),
       },
       home: const MyHomePage(),
     );
