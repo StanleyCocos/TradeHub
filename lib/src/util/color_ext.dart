@@ -18,9 +18,13 @@ class THColor {
    static Color get black99000000 => const Color(0x99000000);
    static Color get black66000000 => const Color(0x66000000);
    static Color get black42000000 => const Color(0x42000000);
+   static Color get blackFF2A2A2A => const Color(0xFF2A2A2A);
+   static Color get blackFF2E2E2E => const Color(0xFF2E2E2E);
+
 
    static Color get gray333333 => const Color(0xFF333333);
    static Color get grayCCCCCC => const Color(0xFFCCCCCC);
+   static Color get grayFFFFFF => const Color(0xFF777777);
    static Color get grayA8A6A9 => const Color(0xFFA8A6A9);
    static Color get grayBBBBBB => const Color(0xffbbbbbb);
    static Color get grayE5E6E8 => const Color(0xFFE5E6E8);

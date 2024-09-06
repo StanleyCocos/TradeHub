@@ -2,6 +2,7 @@ import 'package:example/pages/base/base_page.dart';
 import 'package:example/pages/base/divider_page.dart';
 import 'package:example/pages/base/image_page.dart';
 import 'package:example/pages/interaction/check_box_page.dart';
+import 'package:example/pages/interaction/dialog_page.dart';
 import 'package:example/pages/interaction/input_page.dart';
 import 'package:example/pages/interaction/interaction_page.dart';
 import 'package:example/pages/interaction/picker_page.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         '/text': (context) => const TextPage(),
         '/image': (context) => ImagePage(),
         '/picker': (context) => const PickerPage(),
+        '/dialog': (context) => const DialogPage(),
       },
       home: const MyHomePage(),
     );
