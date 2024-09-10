@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trade_hub/trade_hub.dart';
@@ -20,11 +19,12 @@ class _InteractionPageState extends State<InteractionPage> {
     "轻提示 Toast",
     "选择器",
     "dialog 弹窗",
+    "下拉菜单"
   ];
 
-  void onClick(int index){
+  void onClick(int index) {
     String routeName = '';
-    switch(index){
+    switch (index) {
       case 0:
         routeName = '/check_box';
         break;
@@ -46,6 +46,9 @@ class _InteractionPageState extends State<InteractionPage> {
       case 6:
         routeName = '/dialog';
         break;
+      case 7:
+        routeName = '/dropdown_menu';
+        break;
       default:
         routeName = '/interaction';
         break;
@@ -62,13 +65,11 @@ class _InteractionPageState extends State<InteractionPage> {
       body: ListView.separated(
         itemCount: _list.length,
         separatorBuilder: (_, __) {
-          return const THDivider(
-            margin: EdgeInsets.symmetric(vertical: 10)
-          );
+          return const THDivider(margin: EdgeInsets.symmetric(vertical: 10));
         },
         itemBuilder: (_, index) {
           return GestureDetector(
-            onTap: ()=> onClick(index),
+            onTap: () => onClick(index),
             child: Container(
               height: 30,
               padding: const EdgeInsets.symmetric(horizontal: 16),

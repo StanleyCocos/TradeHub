@@ -19,3 +19,7 @@ export 'src/th_text/th_font_loader.dart';
 export 'src/th_image/th_image.dart';
 export 'src/th_picker/th_picker.dart';
 export 'src/th_dialog.dart';
+export 'src/th_dropdown_menu/th_dropdown_menu.dart';
+export 'src/th_dropdown_menu/th_dropdown_item.dart';
+export 'src/th_dropdown_menu/th_dropdown_popup.dart';
+export 'src/th_dropdown_menu/th_dropdown_inherited.dart';

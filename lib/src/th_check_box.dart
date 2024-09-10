@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:trade_hub/src/th_divider.dart';
 import 'package:trade_hub/src/util/iterable_ext.dart';
+
+import 'util/color_ext.dart';
 
 enum THCheckBoxType {
   /// 单选框
@@ -70,6 +73,8 @@ class THCheckBox<T> extends StatefulWidget {
     super.key,
     required this.itemList,
     required this.itemBuilder,
+    this.color,
+    this.separatorBuilder,
     this.itemCompare,
     this.controller,
     this.direction = THCheckBoxDirection.vertical,
@@ -129,6 +134,11 @@ class THCheckBox<T> extends StatefulWidget {
   /// 单选是否支持取消选中
   bool radioAllowCancel = false;
 
+  /// 分割线构建器 只适用于纵向，且使用后 runSpacing 无效
+  IndexedWidgetBuilder? separatorBuilder;
+
+  final Color? color;
+
   @override
   State<StatefulWidget> createState() {
     return _THCheckBoxState<T>();
@@ -185,16 +195,23 @@ class _THCheckBoxState<T> extends State<THCheckBox<T>> {
   }
 
   Widget _buildVertical(BuildContext context) {
-    return ListView.separated(
-      shrinkWrap: true,
-      itemCount: widget.itemList.length,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (BuildContext context, int index) {
-        return _buildItem(context, index);
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return SizedBox(height: widget.runSpacing);
-      },
+    return Container(
+      color: widget.color ?? Colors.white,
+      child: ListView.separated(
+        shrinkWrap: true,
+        itemCount: widget.itemList.length,
+        padding: EdgeInsets.zero,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) {
+          return _buildItem(context, index);
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          if(widget.separatorBuilder != null) {
+            return widget.separatorBuilder!(context, index);
+          }
+          return SizedBox(height: widget.runSpacing);
+        },
+      ),
     );
   }
 
@@ -315,7 +332,6 @@ class _THCheckBoxState<T> extends State<THCheckBox<T>> {
   void reverseAll() {
     /// 单选框不支持反选
     if (widget.type == THCheckBoxType.radio) return;
-    if (widget.checkedStatesList == null) return;
     List<T> list = [];
     for (int i = 0; i < widget.itemList.length; i++) {
       var item = widget.itemList[i];
@@ -336,8 +352,9 @@ class _THCheckBoxState<T> extends State<THCheckBox<T>> {
 
   /// 重置选项
   void reset() {
-    if (widget.checkedStatesList == null || widget.checkedStatesList!.isEmpty)
+    if (widget.checkedStatesList!.isEmpty) {
       return;
+    }
     widget.checkedStatesList?.clear();
     setState(() {});
   }
@@ -366,6 +383,69 @@ class THCheckboxItem extends StatelessWidget {
           ),
           Text(title),
         ],
+      ),
+    );
+  }
+}
+
+class THCheckboxItem2 extends StatelessWidget {
+  final String title;
+  final bool checked;
+  final Color? selectedColor;
+  final Color? unselectedColor;
+
+  const THCheckboxItem2({
+    super.key,
+    required this.title,
+    required this.checked,
+    this.selectedColor,
+    this.unselectedColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Container(
+        color: THColor.white,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    height: 50,
+                    alignment: Alignment.centerLeft,
+                    color: THColor.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 22),
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: checked
+                            ? selectedColor?? THColor.hex(0xFF6600)
+                            : unselectedColor ?? THColor.hex(0x1D2129),
+                      ),
+                    ),
+                  ),
+                ),
+                Offstage(
+                  offstage: !checked,
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 32),
+                    child: Icon(
+                      Icons.done,
+                      size: 20,
+                      color: selectedColor ?? THColor.hex(0xFF6600),
+                    ),
+                  ),
+                )
+              ],
+            ),
+
+            const THDivider(margin: EdgeInsets.symmetric(horizontal: 22)),
+          ],
+        ),
       ),
     );
   }
