@@ -12,6 +12,9 @@ dependencies:
     sdk: flutter
   flutter_screenutil: 5.0.1+2
 
+  # 轮播图组件
+  flutter_swiper_null_safety: ^1.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

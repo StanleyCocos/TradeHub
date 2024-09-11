@@ -10,6 +10,7 @@ import 'package:example/pages/interaction/picker_page.dart';
 import 'package:example/pages/interaction/quantity_editor_page.dart';
 import 'package:example/pages/interaction/switch_page.dart';
 import 'package:example/pages/interaction/toast_page.dart';
+import 'package:example/pages/show/swiper_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         '/picker': (context) => const PickerPage(),
         '/dialog': (context) => const DialogPage(),
         '/dropdown_menu': (context) => const DropdownMenuPage(),
+        '/swiper': (context) => const SwiperPage(),
       },
       home: const MyHomePage(),
     );

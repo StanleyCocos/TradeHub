@@ -12,7 +12,8 @@ class ShowPage extends StatefulWidget {
 class _ShowPageState extends State<ShowPage> {
   final List<String> _list = [
     '倒计时',
-    '圆形加载'
+    '圆形加载',
+    '轮播图',
   ];
 
   void onClick(int index){
@@ -23,6 +24,9 @@ class _ShowPageState extends State<ShowPage> {
         break;
       case 1:
         routeName = '/circle_loading';
+        break;
+      case 2:
+        routeName = '/swiper';
         break;
       default:
         routeName = '/base';
