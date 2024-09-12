@@ -18,6 +18,7 @@ import 'pages/base/text_page.dart';
 import 'pages/show/circle_loading_page.dart';
 import 'pages/show/countdown_page.dart';
 import 'pages/show/show_page.dart';
+import 'pages/show/tag_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         '/dialog': (context) => const DialogPage(),
         '/dropdown_menu': (context) => const DropdownMenuPage(),
         '/swiper': (context) => const SwiperPage(),
+        '/tag': (context) => const TagPage(),
       },
       home: const MyHomePage(),
     );

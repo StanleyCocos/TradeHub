@@ -14,6 +14,7 @@ class _ShowPageState extends State<ShowPage> {
     '倒计时',
     '圆形加载',
     '轮播图',
+    '标签'
   ];
 
   void onClick(int index){
@@ -27,6 +28,9 @@ class _ShowPageState extends State<ShowPage> {
         break;
       case 2:
         routeName = '/swiper';
+        break;
+      case 3:
+        routeName = '/tag';
         break;
       default:
         routeName = '/base';

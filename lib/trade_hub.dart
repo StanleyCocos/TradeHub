@@ -25,3 +25,5 @@ export 'src/th_dropdown_menu/th_dropdown_popup.dart';
 export 'src/th_dropdown_menu/th_dropdown_inherited.dart';
 export 'src/th_swiper/th_swiper.dart';
 export 'src/th_swiper/th_page_transform.dart';
+export 'src/th_tag/th_tag.dart';
+export 'src/th_tag/th_tag_styles.dart';
