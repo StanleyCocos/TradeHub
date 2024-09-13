@@ -1,6 +1,7 @@
 import 'package:example/pages/base/base_page.dart';
 import 'package:example/pages/base/divider_page.dart';
 import 'package:example/pages/base/image_page.dart';
+import 'package:example/pages/function/function_page.dart';
 import 'package:example/pages/interaction/check_box_page.dart';
 import 'package:example/pages/interaction/dialog_page.dart';
 import 'package:example/pages/interaction/dropdown_menu_page.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'pages/base/text_page.dart';
+import 'pages/function/upload_page.dart';
 import 'pages/show/circle_loading_page.dart';
 import 'pages/show/countdown_page.dart';
 import 'pages/show/show_page.dart';
@@ -51,6 +53,8 @@ class MyApp extends StatelessWidget {
         '/dropdown_menu': (context) => const DropdownMenuPage(),
         '/swiper': (context) => const SwiperPage(),
         '/tag': (context) => const TagPage(),
+        '/upload': (context) => const UploadPage(),
+        '/function': (context) => const FunctionPage(),
       },
       home: const MyHomePage(),
     );
@@ -78,6 +82,9 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case 2:
         routeName = '/show';
+        break;
+      case 3:
+        routeName = '/function';
         break;
       default:
         routeName = '/base';
