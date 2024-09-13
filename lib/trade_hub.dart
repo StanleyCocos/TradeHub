@@ -27,4 +27,4 @@ export 'src/th_swiper/th_swiper.dart';
 export 'src/th_swiper/th_page_transform.dart';
 export 'src/th_tag/th_tag.dart';
 export 'src/th_tag/th_tag_styles.dart';
-export 'src/th_upload/image_upload/image_upload_view.dart';
+export 'src/th_upload/upload_view.dart';

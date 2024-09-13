@@ -1,11 +1,13 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:trade_hub/src/th_text/th_text.dart';
+import 'package:trade_hub/src/th_upload/upload_view.dart';
 
-import 'bean/image_upload_bean.dart';
+import 'bean/upload_bean.dart';
 import 'st_network_image.dart';
 
-
 class UploadView extends StatelessWidget {
-  final ImageUploadBean bean;
+  final UploadBean bean;
   final double? size;
   final Function()? onImageTap;
   final Function()? onCloseTap;
@@ -20,22 +22,22 @@ class UploadView extends StatelessWidget {
   ///图片-视图
   Widget imageView() {
     Widget imageView;
-    UpImageType upImageType = bean.upImageType;
+    UpViewType upImageType = bean.upViewType;
     dynamic assets = bean.assets;
 
-    if (upImageType == UpImageType.ICON) {
+    if (upImageType == UpViewType.ICON) {
       imageView = Icon(
         Icons.camera_alt,
         size: 30,
         color: Colors.grey[400],
       );
-    } else if (upImageType == UpImageType.NETWORK) {
+    } else if (upImageType == UpViewType.NETWORK) {
       String path = bean.assets ?? '';
       imageView = STNetworkImage(
         imageUrl: path,
         fit: BoxFit.cover,
       );
-    } else if (upImageType == UpImageType.FILE) {
+    } else if (upImageType == UpViewType.FILE) {
       imageView = Image.file(assets, fit: BoxFit.cover);
     } else {
       imageView = Icon(
@@ -61,13 +63,84 @@ class UploadView extends StatelessWidget {
     );
   }
 
+  ///文件视图
+  Widget fileView() {
+    Widget imageView;
+    UpViewType upViewType = bean.upViewType;
+    dynamic assets = bean.assets;
+    String fileName = "";
+    if (bean.assets != null && bean.assets is File) {
+      fileName = "${bean.assets.path.split("/").last}";
+    }
+
+    if (upViewType == UpViewType.ICON) {
+      imageView = Icon(
+        Icons.add,
+        size: 30,
+        color: Colors.grey[400],
+      );
+    } else if (upViewType == UpViewType.FILE ||
+        upViewType == UpViewType.NETWORK) {
+      imageView = Icon(
+        Icons.file_present_rounded,
+        size: 30,
+        color: Colors.grey[400],
+      );
+    } else {
+      imageView = Icon(
+        Icons.add,
+        size: 30,
+        color: Colors.grey[400],
+      );
+    }
+
+    return GestureDetector(
+      onTap: _onImageTap,
+      child: Container(
+        height: size,
+        width: size,
+        // margin: EdgeInsets.all(16.w),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey[100]!, width: 1),
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          color: Colors.white,
+        ),
+        alignment: Alignment.center,
+        child: Stack(
+          children: [
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: imageView,
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Offstage(
+                offstage: fileName.isEmpty,
+                child: THText(
+                  fileName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   ///删除视图
   Widget deleteView() {
     Widget child;
-    UpLoadType upLoadType = bean.upLoadType;
-    if (upLoadType == UpLoadType.SUCCESS ||
-        upLoadType == UpLoadType.FAIL ||
-        upLoadType == UpLoadType.INITDATA) {
+    UpLoadState upLoadType = bean.upLoadState;
+    if (upLoadType == UpLoadState.SUCCESS ||
+        upLoadType == UpLoadState.FAIL ||
+        upLoadType == UpLoadState.INITDATA) {
       child = InkWell(
         onTap: onCloseTap,
         child: Icon(
@@ -86,19 +159,19 @@ class UploadView extends StatelessWidget {
   Widget uploadProgress() {
     String value = "";
     Color color = Colors.black87;
-    UpLoadType upLoadType = bean.upLoadType;
+    UpLoadState upLoadType = bean.upLoadState;
     int progress = bean.progress ?? 0;
-    if (upLoadType == UpLoadType.UPING) {
+    if (upLoadType == UpLoadState.UPING) {
       if (progress == 100) {
         value = '上傳中';
       } else {
         value = '$progress %';
       }
       color = Colors.black87;
-    } else if (upLoadType == UpLoadType.SUCCESS) {
+    } else if (upLoadType == UpLoadState.SUCCESS) {
       value = '上傳成功';
       color = Colors.green;
-    } else if (upLoadType == UpLoadType.FAIL) {
+    } else if (upLoadType == UpLoadState.FAIL) {
       value = '上傳失敗';
       color = Colors.red;
     }
@@ -135,7 +208,11 @@ class UploadView extends StatelessWidget {
   ///图片与删除视图
   Widget imageAndDeleteView() {
     List<Widget> children = [];
-    children.add(imageView());
+    if (bean.upLoadType == UpLoadType.file) {
+      children.add(fileView());
+    } else {
+      children.add(imageView());
+    }
     children.add(deleteView());
     return Stack(children: children);
   }
@@ -155,7 +232,7 @@ class UploadView extends StatelessWidget {
 
   ///图片点击
   void _onImageTap() {
-    if (bean.upLoadType != UpLoadType.INIT) return;
+    if (bean.upLoadState != UpLoadState.INIT) return;
     onImageTap?.call();
   }
 }

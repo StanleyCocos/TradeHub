@@ -5,10 +5,11 @@ import 'package:tiny_network/tiny_network.dart';
 import 'package:trade_hub/src/base/base_state_page.dart';
 import 'package:trade_hub/src/th_provider_widget.dart';
 
-import '../../util/init_util.dart';
-import 'image_upload_controller.dart';
-import 'upload_view.dart';
+import '../util/init_util.dart';
+import 'upload_controller.dart';
+import 'itme_upload_view.dart';
 
+enum UpLoadType { image, file }
 
 class ImageUploadView extends StatefulWidget {
   final double size;
@@ -26,11 +27,14 @@ class ImageUploadView extends StatefulWidget {
   final double spacing;
   final double runSpacing;
 
+  final UpLoadType upLoadType;
+
   //图片上传时是否压缩
   final bool isCompression;
 
-  ImageUploadView({
+  const ImageUploadView({super.key,
     required this.uploadUrl,
+    this.upLoadType = UpLoadType.image,
     this.size = 100,
     this.max = 100,
     this.spacing = 0.0,
@@ -73,6 +77,7 @@ class _ImageUploadViewState
     controller.model.fromPicManage = widget.fromPicManage;
     controller.model.onResult = widget.onResult;
     controller.model.isCompression = widget.isCompression;
+    controller.model.upLoadType = widget.upLoadType;
     super.initState();
   }
 
@@ -93,7 +98,7 @@ class _ImageUploadViewState
           UploadView(
             bean: element,
             size: widget.size,
-            onImageTap: () => controller.onImageTap(element),
+            onImageTap: () => controller.onItemViewTap(element),
             onCloseTap: () => controller.onCloseTap(element),
           ),
         );

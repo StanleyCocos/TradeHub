@@ -17,11 +17,14 @@ dependencies:
   cached_network_image: 3.3.0          # Flutter库来加载和缓存网络图像。也可以与占位符和错误小部件一起使用
   image_picker: 0.8.7+5                # 从图像库中拾取图像，并使用相机拍摄新照片
   flutter_image_compress: 1.1.3         # 图片压缩
+  file_picker: 8.0.5                  # 文件选择器
+  provider: 6.1.1
+
   tiny_network:
     git:
       url: https://github.com/tinyIdeasIn/tiny_network.git
 
-  provider: 6.1.1
+
 
 dev_dependencies:
   flutter_test:

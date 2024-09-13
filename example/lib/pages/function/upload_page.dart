@@ -15,7 +15,11 @@ class _UploadPageState extends State<UploadPage> {
   Widget build(BuildContext context) {
     return ExamplePage(
       title: '上传插件',
-      children: [ExampleItem(title: "图片上传", widget: _imageUpload)],
+      children: [
+        ExampleItem(title: "图片上传", widget: _imageUpload),
+        ExampleItem(title: "文件上传", widget: _fileUpload),
+        ExampleItem(title: "单个上传", widget: _fileSingleUpload),
+      ],
     );
   }
 
@@ -23,16 +27,47 @@ class _UploadPageState extends State<UploadPage> {
     return ImageUploadView(
       max: 10,
       netWorkType: 'feedback',
-      size: 160,
-      onUploadProgress: onUploadProgress,
-      onChanged: (List<String> list){
+      size: 100,
+      onUploadProgress: (bool value) {
+        print('上传进度：$value');
+      },
+      onChanged: (List<String> list) {
         print('图片上传结果：$list');
       },
       uploadUrl: 'https://mapi.debug.8591.com.tw/api/pub/upload',
     );
   }
 
-  void onUploadProgress(bool value) {
-    print('上传进度：$value');
+  Widget get _fileUpload {
+    return ImageUploadView(
+      max: 10,
+      netWorkType: 'feedback',
+      upLoadType: UpLoadType.file,
+      size: 100,
+      onUploadProgress: (bool value) {
+        print('上传进度：$value');
+      },
+      onChanged: (List<String> list) {
+        print('上传结果：$list');
+      },
+      uploadUrl: 'https://mapi.debug.8591.com.tw/api/feedback/upload/log',
+    );
   }
+
+  Widget get _fileSingleUpload {
+    return ImageUploadView(
+      max: 1,
+      netWorkType: 'feedback',
+      upLoadType: UpLoadType.file,
+      size: 100,
+      onUploadProgress: (bool value) {
+        print('上传进度：$value');
+      },
+      onChanged: (List<String> list) {
+        print('上传结果：$list');
+      },
+      uploadUrl: 'https://mapi.debug.8591.com.tw/api/feedback/upload/log',
+    );
+  }
+
 }
