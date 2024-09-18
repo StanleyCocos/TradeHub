@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_screenutil: 5.0.1+2
+  animate_do: 3.3.4
 
 dev_dependencies:
   flutter_test:

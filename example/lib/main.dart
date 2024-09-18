@@ -5,6 +5,10 @@ import 'package:example/pages/interaction/interaction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'action/action_page.dart';
+import 'action/src/popup_page.dart';
+import 'pages/base_page.dart';
+import 'pages/show/avatar_page.dart';
 import 'pages/show/countdown_page.dart';
 import 'pages/show/show_page.dart';
 
@@ -27,6 +31,9 @@ class MyApp extends StatelessWidget {
         '/divider': (context) => const DividerPage(),
         '/interaction': (context) => const InteractionPage(),
         '/check_box': (context) => const CheckBoxPage(),
+        '/avatar': (context) => const AvatarPage(),
+        '/action': (context) => const ActionPage(),
+        '/popup': (context) => const PopupPage(),
       },
       home: const MyHomePage(),
     );
@@ -50,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
         routeName = '/base';
         break;
       case 1:
-        routeName = '/interaction';
+        routeName = '/action';
         break;
       case 2:
         routeName = '/show';
