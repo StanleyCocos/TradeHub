@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trade_hub/trade_hub.dart';
 
+///交互组件页面
 class ActionPage extends StatefulWidget {
   const ActionPage({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ActionState();
+  State<StatefulWidget> createState() => _ActionPageState();
 }
 
-class _ActionState extends State<ActionPage> {
+class _ActionPageState extends State<ActionPage> {
   final List<String> _list = [
+    "单选",
+    "输入框",
+    "数量编辑器",
+    "开关 Switch",
+    "轻提示 Toast",
+    "选择器",
+    "dialog 弹窗",
+    "下拉菜单",
     'popup',
   ];
 
@@ -17,9 +27,34 @@ class _ActionState extends State<ActionPage> {
     String routeName = '';
     switch (index) {
       case 0:
-        routeName = '/popup';
+        routeName = '/check_box';
         break;
       case 1:
+        routeName = '/input';
+        break;
+      case 2:
+        routeName = '/quantity_editor';
+        break;
+      case 3:
+        routeName = '/switch';
+        break;
+      case 4:
+        routeName = '/toast';
+        break;
+      case 5:
+        routeName = '/picker';
+        break;
+      case 6:
+        routeName = '/dialog';
+        break;
+      case 7:
+        routeName = '/dropdown_menu';
+        break;
+      case 8:
+        routeName = '/popup';
+        break;
+      default:
+        routeName = '/interaction';
         break;
     }
     Get.toNamed(routeName);
@@ -34,28 +69,19 @@ class _ActionState extends State<ActionPage> {
       body: ListView.separated(
         itemCount: _list.length,
         separatorBuilder: (_, __) {
-          return Divider(
-            endIndent: 16,
-            indent: 16,
-            height: 1,
-            color: Colors.grey.withOpacity(0.5),
-            thickness: 1,
-          );
+          return const THDivider(margin: EdgeInsets.symmetric(vertical: 10));
         },
         itemBuilder: (_, index) {
           return GestureDetector(
             onTap: () => onClick(index),
             child: Container(
-              height: 50,
-              color: Colors.white,
-              alignment: Alignment.centerLeft,
+              height: 30,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 _list[index],
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black54,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),

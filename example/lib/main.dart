@@ -1,30 +1,28 @@
+import 'package:example/pages/action/action_page.dart';
+import 'package:example/pages/action/example/check_box_page.dart';
+import 'package:example/pages/action/example/dialog_page.dart';
+import 'package:example/pages/action/example/dropdown_menu_page.dart';
+import 'package:example/pages/action/example/input_page.dart';
+import 'package:example/pages/action/example/picker_page.dart';
+import 'package:example/pages/action/example/popup_page.dart';
+import 'package:example/pages/action/example/quantity_editor_page.dart';
+import 'package:example/pages/action/example/switch_page.dart';
+import 'package:example/pages/action/example/toast_page.dart';
 import 'package:example/pages/base/base_page.dart';
-import 'package:example/pages/base/divider_page.dart';
-import 'package:example/pages/base/image_page.dart';
+import 'package:example/pages/base/example/divider_page.dart';
+import 'package:example/pages/base/example/image_page.dart';
 import 'package:example/pages/function/function_page.dart';
-import 'package:example/pages/interaction/check_box_page.dart';
-import 'package:example/pages/interaction/dialog_page.dart';
-import 'package:example/pages/interaction/dropdown_menu_page.dart';
-import 'package:example/pages/interaction/input_page.dart';
-import 'package:example/pages/interaction/interaction_page.dart';
-import 'package:example/pages/interaction/picker_page.dart';
-import 'package:example/pages/interaction/quantity_editor_page.dart';
-import 'package:example/pages/interaction/switch_page.dart';
-import 'package:example/pages/interaction/toast_page.dart';
-import 'package:example/pages/show/swiper_page.dart';
+import 'package:example/pages/show/example/swiper_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'pages/base/text_page.dart';
-import 'pages/function/upload_page.dart';
-import 'pages/show/circle_loading_page.dart';
-import 'action/action_page.dart';
-import 'action/src/popup_page.dart';
-import 'pages/base_page.dart';
-import 'pages/show/avatar_page.dart';
-import 'pages/show/countdown_page.dart';
+import 'pages/base/example/text_page.dart';
+import 'pages/function/example/upload_page.dart';
+import 'pages/show/example/circle_loading_page.dart';
+import 'pages/show/example/avatar_page.dart';
+import 'pages/show/example/countdown_page.dart';
 import 'pages/show/show_page.dart';
-import 'pages/show/tag_page.dart';
+import 'pages/show/example/tag_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -43,7 +41,7 @@ class MyApp extends StatelessWidget {
         '/show': (context) => const ShowPage(),
         '/countdown': (context) => const CountdownPage(),
         '/divider': (context) => const DividerPage(),
-        '/interaction': (context) => const InteractionPage(),
+        '/action': (context) => const ActionPage(),
         '/check_box': (context) => const CheckBoxPage(),
         '/input': (context) => const InputPage(),
         '/quantity_editor': (context) => const QuantityEditorPage(),
@@ -60,7 +58,6 @@ class MyApp extends StatelessWidget {
         '/upload': (context) => const UploadPage(),
         '/function': (context) => const FunctionPage(),
         '/avatar': (context) => const AvatarPage(),
-        '/action': (context) => const ActionPage(),
         '/popup': (context) => const PopupPage(),
       },
       home: const MyHomePage(),

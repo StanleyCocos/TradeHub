@@ -64,7 +64,6 @@ class _ShowPageState extends State<ShowPage> {
               color: Colors.white,
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              color: Colors.white,
               child: Center(
                 child: Text(
                   _list[index],
