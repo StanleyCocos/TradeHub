@@ -15,11 +15,12 @@ class _ShowPageState extends State<ShowPage> {
     '圆形加载',
     '轮播图',
     '标签'
+    '头像'
   ];
 
-  void onClick(int index){
+  void onClick(int index) {
     String routeName = '';
-    switch(index){
+    switch (index) {
       case 0:
         routeName = '/countdown';
         break;
@@ -32,11 +33,14 @@ class _ShowPageState extends State<ShowPage> {
       case 3:
         routeName = '/tag';
         break;
+      case 4:
+        routeName = '/avatar';
+        break;
       default:
         routeName = '/base';
         break;
     }
-     Get.toNamed(routeName);
+    Get.toNamed(routeName);
   }
 
   @override
@@ -54,9 +58,11 @@ class _ShowPageState extends State<ShowPage> {
         },
         itemBuilder: (_, index) {
           return GestureDetector(
-            onTap: ()=> onClick(index),
+            onTap: () => onClick(index),
             child: Container(
               height: 50,
+              color: Colors.white,
+              alignment: Alignment.centerLeft,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               color: Colors.white,
               child: Center(

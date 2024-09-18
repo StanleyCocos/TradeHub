@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_screenutil: 5.0.1+2
+  animate_do: 3.3.4
 
   # 轮播图组件
   flutter_swiper_null_safety: ^1.0.2

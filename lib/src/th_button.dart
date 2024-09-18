@@ -26,11 +26,6 @@ abstract class _THBtn extends StatelessWidget {
     this.height,
   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
 }
 
 class THButton extends _THBtn {
