@@ -2,9 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:trade_hub/src/th_text/th_text.dart';
 import 'package:trade_hub/src/th_upload/upload_view.dart';
+import 'package:trade_hub/trade_hub.dart';
 
 import 'bean/upload_bean.dart';
-import 'st_network_image.dart';
+import '../th_image/th_network_image.dart';
 
 class UploadView extends StatelessWidget {
   final UploadBean bean;
@@ -33,8 +34,8 @@ class UploadView extends StatelessWidget {
       );
     } else if (upImageType == UpViewType.NETWORK) {
       String path = bean.assets ?? '';
-      imageView = STNetworkImage(
-        imageUrl: path,
+      imageView = THImage(
+        imgUrl: path,
         fit: BoxFit.cover,
       );
     } else if (upImageType == UpViewType.FILE) {

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:trade_hub/src/util/color_ext.dart';
 import 'dart:ui' as ui;
 
-class FBottomSheet {
+class THBottomSheet {
   ///底部弹窗-列表
-  static Future fBottomSheetOption(
+  static Future bottomSheetOption(
     BuildContext context, {
     List<String>? option,
     String? initData,
@@ -28,7 +28,7 @@ class FBottomSheet {
             ),
             color: THColor.white,
             constraints: BoxConstraints(maxHeight: maxHeight ?? 400),
-            child: FBottomSheetOption(
+            child: THBottomSheetOption(
               list: option ?? [],
               initData: initData ?? "",
             ),
@@ -45,7 +45,7 @@ class FBottomSheet {
   }
 
   ///底部弹窗-视图
-  static Future fBottomSheetView(
+  static Future bottomSheetView(
     BuildContext context, {
     required Widget content,
     Widget? title,
@@ -67,7 +67,7 @@ class FBottomSheet {
               bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
             constraints: BoxConstraints(maxHeight: maxHeight ?? 400),
-            child: FBottomSheetView(
+            child: THBottomSheetView(
               title: title,
               content: content,
               bottom: bottom,
@@ -79,7 +79,7 @@ class FBottomSheet {
   }
 
   ///底部弹窗-自定义
-  static Future fBottomSheetViewCustom(
+  static Future bottomSheetViewCustom(
     BuildContext context, {
     required Widget content,
     Widget? title,
@@ -117,18 +117,18 @@ class FBottomSheet {
   }
 }
 
-class FBottomSheetOption extends StatelessWidget {
+class THBottomSheetOption extends StatelessWidget {
   final List<String> list;
   final String initData;
 
-  FBottomSheetOption({
+  THBottomSheetOption({
     required this.list,
     required this.initData,
   });
 
   @override
   Widget build(BuildContext context) {
-    return FBottomSheetView(
+    return THBottomSheetView(
       content: contentView(context),
       bottom: bottomView(context),
     );
@@ -191,12 +191,12 @@ class FBottomSheetOption extends StatelessWidget {
   }
 }
 
-class FBottomSheetView extends StatelessWidget {
+class THBottomSheetView extends StatelessWidget {
   final Widget? title;
   final Widget content;
   final Widget? bottom;
 
-  FBottomSheetView({
+  THBottomSheetView({
     required this.content,
     this.title,
     this.bottom,

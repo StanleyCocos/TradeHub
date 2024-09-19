@@ -187,7 +187,7 @@ class ImageUploadController extends BaseController<ImageUploadModel> {
 
   ///图片选择
   void onImageTap(UploadBean bean) {
-    FBottomSheet.fBottomSheetOption(
+    THBottomSheet.bottomSheetOption(
       context,
       option: model.options,
       onSelect: (int index, String value) {

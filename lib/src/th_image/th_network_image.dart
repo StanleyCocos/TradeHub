@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:trade_hub/src/th_image/th_image.dart';
 
-
-class STNetworkImage extends StatelessWidget {
+/// deprecated, use [THImage]
+class THNetworkImage extends StatelessWidget {
 
   final String? imageUrl;
   final BoxFit? fit;
@@ -14,7 +15,7 @@ class STNetworkImage extends StatelessWidget {
   final LoadingErrorWidgetBuilder? errorWidget;
   final ImageWidgetBuilder? imageBuilder;
 
-  STNetworkImage({
+  THNetworkImage({
     required this.imageUrl,
     this.fit,
     this.placeholder,
@@ -45,7 +46,7 @@ class STNetworkImage extends StatelessWidget {
   }
 }
 
-extension Private on STNetworkImage {
+extension Private on THNetworkImage {
   String get _imageUrl {
     return imageUrl ?? "";
     /*if(imageUrl != null && imageUrl!.startsWith("http")){
