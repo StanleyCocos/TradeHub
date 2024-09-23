@@ -15,6 +15,7 @@ import 'package:example/pages/function/function_page.dart';
 import 'package:example/pages/show/example/swiper_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 import 'pages/base/example/text_page.dart';
 import 'pages/function/example/upload_page.dart';
@@ -24,42 +25,61 @@ import 'pages/show/example/countdown_page.dart';
 import 'pages/show/show_page.dart';
 import 'pages/show/example/tag_page.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  // 设置 URL 路由策略为 Path URL
+  //setPathUrlStrategy();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  Map<String, Widget Function(BuildContext)> routes = {
+    '/base': (context) => const BasePage(),
+    '/show': (context) => const ShowPage(),
+    '/countdown': (context) => const CountdownPage(),
+    '/divider': (context) => const DividerPage(),
+    '/action': (context) => const ActionPage(),
+    '/check_box': (context) => const CheckBoxPage(),
+    '/input': (context) => const InputPage(),
+    '/quantity_editor': (context) => const QuantityEditorPage(),
+    '/switch': (context) => const SwitchPage(),
+    '/circle_loading': (context) => const CircleLoadingPage(),
+    '/toast': (context) => const ToastPage(),
+    '/text': (context) => const TextPage(),
+    '/image': (context) => ImagePage(),
+    '/picker': (context) => const PickerPage(),
+    '/dialog': (context) => const DialogPage(),
+    '/dropdown_menu': (context) => const DropdownMenuPage(),
+    '/swiper': (context) => const SwiperPage(),
+    '/tag': (context) => const TagPage(),
+    '/upload': (context) => const UploadPage(),
+    '/function': (context) => const FunctionPage(),
+    '/avatar': (context) => const AvatarPage(),
+    '/popup': (context) => const PopupPage(),
+  };
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp (
+    return GetMaterialApp(
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      routes: {
-        '/base': (context) => const BasePage(),
-        '/show': (context) => const ShowPage(),
-        '/countdown': (context) => const CountdownPage(),
-        '/divider': (context) => const DividerPage(),
-        '/action': (context) => const ActionPage(),
-        '/check_box': (context) => const CheckBoxPage(),
-        '/input': (context) => const InputPage(),
-        '/quantity_editor': (context) => const QuantityEditorPage(),
-        '/switch': (context) => const SwitchPage(),
-        '/circle_loading': (context) => const CircleLoadingPage(),
-        '/toast': (context) => const ToastPage(),
-        '/text': (context) => const TextPage(),
-        '/image': (context) => ImagePage(),
-        '/picker': (context) => const PickerPage(),
-        '/dialog': (context) => const DialogPage(),
-        '/dropdown_menu': (context) => const DropdownMenuPage(),
-        '/swiper': (context) => const SwiperPage(),
-        '/tag': (context) => const TagPage(),
-        '/upload': (context) => const UploadPage(),
-        '/function': (context) => const FunctionPage(),
-        '/avatar': (context) => const AvatarPage(),
-        '/popup': (context) => const PopupPage(),
+      onGenerateRoute: (settings) {
+        // 获取原始路由名称
+        String routeName = settings.name ?? '/';
+        // 处理路由，去掉查询参数部分
+        if (routeName.contains('?')) {
+          routeName = routeName.split('?')[0];  // 去掉 ? 后面的部分
+        }
+        return MaterialPageRoute(
+          builder: (context) {
+            return routes[routeName]!(context);
+          },
+        );
       },
+      routes: routes,
       home: const MyHomePage(),
     );
   }
@@ -77,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future _toPage(int index) async {
     String routeName = '';
-    switch(index){
+    switch (index) {
       case 0:
         routeName = '/base';
         break;
@@ -115,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         itemBuilder: (content, index) {
           return GestureDetector(
-            onTap: ()=> _toPage(index),
+            onTap: () => _toPage(index),
             child: Container(
               width: double.infinity,
               height: double.infinity,

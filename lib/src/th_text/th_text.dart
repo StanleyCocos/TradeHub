@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui show TextHeightBehavior;
 
@@ -216,7 +215,7 @@ class THText extends StatelessWidget {
     }
     var realFontWeight = style?.fontWeight ?? fontWeight;
     // Flutter 3.0之后，iOS w500之下字体不生效，需要替换字体
-    if (Platform.isIOS &&
+    if (PlatformUtil.isIOS &&
         (styleFontFamily == null || styleFontFamily.isEmpty) &&
         realFontWeight != null &&
         realFontWeight.index <= FontWeight.w500.index) {
