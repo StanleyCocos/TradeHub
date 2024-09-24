@@ -6,8 +6,7 @@ class Font {
   late double height;
   late FontWeight fontWeight;
 
-  Font({required int size, double? lineHeight, this.fontWeight = FontWeight.w400}) {
-    this.size = size.toDouble();
+  Font({required this.size, double? lineHeight, this.fontWeight = FontWeight.w400}) {
     lineHeight ??= size * 1.1;
     height = lineHeight.toDouble() / size;
   }
